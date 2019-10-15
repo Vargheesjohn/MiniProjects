@@ -1,0 +1,28 @@
+from bs4 import BeautifulSoup as soup
+from urllib.request import urlopen as ureq
+import subprocess
+
+flipkart_url = "https://www.flipkart.com/search?q=oneplus&sid=tyy%2C4io&as=on&as-show=on&otracker=AS_QueryStore_OrganicAutoSuggest_0_5_na_na_pr&otracker1=AS_QueryStore_OrganicAutoSuggest_0_5_na_na_pr&as-pos=0&as-type=RECENT&suggestionId=oneplus&requestId=9e38d3f9-0b17-46ce-bf0f-ce792796db69&as-searchtext=oneplus"
+
+uclient = ureq(flipkart_url)
+page_html = uclient.read()
+uclient.close()
+page_soup = soup(page_html, "html.parser")
+containers = page_soup.findAll("div", {"class": "_3O0U0u"})
+container = containers[0]
+price = container.findAll("div", {"class": "col col-5-12 _2o7WAb"})
+file_name = "flipkart_oneplus.csv"
+file_open = open(file_name, "w")
+headers = "title, Price\n"
+file_open.write(headers)
+
+for container in containers:
+    title = container.div.img["alt"]
+    price = container.findAll("div", {"class": "col col-5-12 _2o7WAb"})
+    price = price[0].text.strip()
+    trimming_price = ''.join(price.split(','))
+    trimming_rupee = trimming_price.split('₹')
+    adding_rupee = "Rs." + trimming_rupee[1]
+    trimming_emi = adding_rupee.split("E")
+    final_price = trimming_emi[0]
+    print(title.replace(",","|") + "," + final_price + "\n")
