@@ -1,5 +1,5 @@
 from bs4 import BeautifulSoup as soup
-from urllib.request import urlopen as ureq
+from urllib.request import urlopen as ureq 
 
 flipkart_url = "https://www.flipkart.com/search?q=oneplus&sid=tyy%2C4io&as=on&as-show=on&otracker=AS_QueryStore_OrganicAutoSuggest_0_5_na_na_pr&otracker1=AS_QueryStore_OrganicAutoSuggest_0_5_na_na_pr&as-pos=0&as-type=RECENT&suggestionId=oneplus&requestId=9e38d3f9-0b17-46ce-bf0f-ce792796db69&as-searchtext=oneplus"
 
